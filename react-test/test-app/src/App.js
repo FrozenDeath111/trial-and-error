@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Country from './countries/Country/country';
+import Cart from './countries/Cart/Cart';
 
 function App() {
   const products = [
@@ -26,6 +28,8 @@ function App() {
         }
       </div>
       <Users></Users>
+      <Users0></Users0>
+      <Countries></Countries>
     </div>
   );
 }
@@ -49,8 +53,13 @@ function Counter(){
       <button onClick={handleDecrease}>decrease</button>
       <button onClick={ () => setCount(count * 2)}>2X value</button>
       <button onClick={ () => setCount(count / 2)}>half value</button>
+      <Display yola={count}></Display>
     </div>
   )
+}
+
+function Display(props){
+  return <h4>Wola ::: {props.yola}</h4>
 }
 
 function Users(){
@@ -66,6 +75,66 @@ function Users(){
       <ul>
         {
           users.map(user => <li key={user.phone}>{user.name} -- {user.phone}</li>)
+        }
+      </ul>
+    </div>
+  )
+}
+
+function Users0(){
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch('https://randomuser.me/api');
+      const {results} = await res.json();
+      setData(results);
+      
+    };
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      <h3>Dynamic User</h3>
+      <ul>
+        {
+          data.map(user => <li key={user.name}>{user.name.first}</li>)
+        }
+      </ul>
+    </div>
+  )
+}
+
+function Countries(){
+  const [countries, setCountries] = useState([]);
+  const [cart, setCart] = useState([]);
+
+
+  useEffect(()=>{
+    try{
+      fetch('https://restcountries.com/v3.1/all')
+      .then(res => res.json())
+      .then(data => setCountries(data));
+    }
+    catch(error){
+      console.log(error);
+    }
+    
+}, [])
+  const handleCountry = (country) => {
+    console.log(country);
+    const newCart = [...cart, country];
+    setCart(newCart);
+  }
+
+  return (
+    <div>
+      <Cart cart={cart}></Cart>
+      <h3>Country Loaded: {cart.length}</h3>
+      <ul>
+        {
+          countries.map(data => <Country set={data} key={data.ccn3} hC={handleCountry}></Country>)
         }
       </ul>
     </div>
