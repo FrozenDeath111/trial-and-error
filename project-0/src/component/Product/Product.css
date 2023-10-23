@@ -1,0 +1,21 @@
+.product{
+    display: flex;
+    padding: 2px;
+    border: 1px solid lightgray;
+}
+
+.product-name{
+    color: blue;
+}
+
+.product-description{
+    padding: 3px;
+}
+
+.cart-button{
+    background-color: goldenrod;
+    width: 150px;
+    height: 30px;
+    border: 1px solid darkgoldenrod;
+    cursor: pointer;
+}
