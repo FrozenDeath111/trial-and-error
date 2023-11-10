@@ -19,3 +19,21 @@
     border: 1px solid darkgoldenrod;
     cursor: pointer;
 }
+
+.remove-button{
+    background-color: orangered;
+    width: 150px;
+    height: 30px;
+    border: 1px solid orangered;
+    cursor: pointer;
+}
+
+.see-details-button{
+    background-color: blueviolet;
+    color: aliceblue;
+    font-weight: 500;
+    width: 300px;
+    height: 30px;
+    border: 1px solid blueviolet;
+    cursor: pointer;
+}

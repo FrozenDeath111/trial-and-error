@@ -12,6 +12,8 @@ const Shop = () => {
   }, []);
   const selectedCountry = country.slice(0, 10);
 
+  //console.log(selectedCountry);
+
   const [cart, setCart] = useState([]);
   const handleAddProduct = (product) => {
     const newCart = [...cart, product];
@@ -28,6 +30,7 @@ const Shop = () => {
       </div>
       <div className="cart-container">
         <Cart cart={cart}></Cart>
+        <button className="review-button">Review Products</button>
       </div>
     </div>
   );
