@@ -1,0 +1,32 @@
+.signup{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 5px solid black;
+    border-radius: 10px;
+    margin: 25%;
+    background-color: aliceblue;
+}
+
+.signup-form{
+    display: flex;
+    flex-direction: column;
+}
+
+input{
+    padding: 5px;
+    margin: 2px;
+    border-style: double;
+}
+
+.signup-btn{
+    background-color: black;
+    color: red;
+    padding: 5px;
+    margin: 2px;
+    border: 2px dashed red;
+    cursor: pointer;
+}

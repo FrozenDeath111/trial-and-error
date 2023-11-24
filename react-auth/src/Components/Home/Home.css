@@ -1,0 +1,14 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logout-btn {
+    width: 30%;
+    color: red;
+    background-color: black;
+    border: 2px dashed red;
+    padding: 2px;
+    margin: 2px;
+}
