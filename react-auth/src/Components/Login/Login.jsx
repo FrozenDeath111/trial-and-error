@@ -13,6 +13,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     const navigate = useNavigate();
+    const setUserinfo = useContext(userContext);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -22,6 +23,13 @@ const Login = () => {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             console.log(userCredential);
             const user = userCredential.user;
+            const resultinfo = {
+                name: email,
+                email: email,
+            }
+            console.log(user);
+            storeAuthToken(resultinfo);
+            setUserinfo[1](resultinfo);
             localStorage.setItem('token', user.accessToken);
             localStorage.setItem('user', JSON.stringify(user));
 
@@ -30,8 +38,6 @@ const Login = () => {
             console.error(error);
         }
     }
-
-    const setUserinfo = useContext(userContext);
 
     const provider = new GoogleAuthProvider();
 
@@ -50,6 +56,7 @@ const Login = () => {
                 email: user.email,
                 photo: user.photoURL
             };
+            storeAuthToken(resultinfo);
 
             setUserinfo[1](resultinfo);
 
@@ -63,6 +70,23 @@ const Login = () => {
 
             console.log(errorCode, errorMessage, email, credential);
         });
+    }
+
+    const storeAuthToken = (resultinfo) => {
+        auth.currentUser.getIdToken(/* forceRefresh */ true)
+        .then(function(idToken) {
+            //console.log(idToken);
+            sessionStorage.setItem('token', idToken);
+            resultinfo = {
+                JWT_token: idToken
+            }
+            // Send token to your backend via HTTPS
+            // ...
+        }).catch(function(error) {
+            // Handle error
+            console.log(error);
+        });
+          
     }
 
     return (

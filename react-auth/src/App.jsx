@@ -5,8 +5,12 @@ import Login from './Components/Login/Login';
 import Signup from './Components/Signup/Signup';
 import Personalauth from './Components/Personalauth/Personalauth';
 import Home from './Components/Home/Home';
+import Book from './Components/Book/Book';
 import Protected from './Components/Protected/Protected';
 import { createContext, useState } from 'react';
+
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 export const userContext = createContext();
 
@@ -14,10 +18,12 @@ function App() {
   const [userinfo, setUserinfo] = useState({
       name:'',
       email:'',
-      photo:''
+      photo:'',
+      JWT_token:''
   });
 
   return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
     <Router>
       <div>
         <Header></Header>
@@ -25,6 +31,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Protected/>}>
             <Route path='/' index element={<Home/>} />
+            <Route path='/book' index element={<Book/>} />
           </Route>
           <Route path='/login' element={<Login/>} />
           <Route path='/signup' element={<Signup/>} />
@@ -33,6 +40,7 @@ function App() {
         </userContext.Provider>
       </div>
     </Router>
+    </LocalizationProvider>
   );
 }
 

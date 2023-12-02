@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Personalauth.css';
 
 const Personalauth = () => {
@@ -15,6 +15,20 @@ const Personalauth = () => {
             const userinfoset = {...user};
             userinfoset.set=true;
             setUser(userinfoset);
+            fetch('http://localhost:3001/setUser', {
+                method:'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(user)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.acknowledged){
+                    alert('Inserted Successfully');
+                }
+                else{
+                    alert('Inserted Unsuccessfully');
+                }
+            })
         }
         e.preventDefault();
     }
@@ -54,6 +68,31 @@ const Personalauth = () => {
             setUser(userinfo)
         }
         
+    }
+
+    const [allUser, setAllUser] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:3001/users')
+        .then(res => res.json())
+        .then(data => {
+            setAllUser(data)
+        })
+    },[])
+
+    const handleDeleteUser = (id) => {
+        fetch(`http://localhost:3001/delete/${id}`,{
+            method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then(result => {
+            if(result){
+                alert("Deleted Successfully");
+            }
+            else{
+                alert("Deleted Unsuccessfully");
+            }
+        })
     }
 
     return (
@@ -96,6 +135,15 @@ const Personalauth = () => {
                         <p>User Password: {user.password}</p>
                     </div> : <p>Not Set</p>
             }
+            <div>
+                <ul>
+                    {
+                        allUser && allUser.map(user => <li key={user._id}>username {user.username} <br />
+                        password {user.password} <br /> id {user._id}
+                        <button onClick={() => {handleDeleteUser(user._id)}}>X</button></li>)
+                    }
+                </ul>
+            </div>
         </div>
     );
 };
